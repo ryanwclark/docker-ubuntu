@@ -57,7 +57,8 @@ RUN debArch=$(dpkg --print-architecture) && \
                     sudo \
                     tzdata \
                     vim-tiny \
-                    ${zstd} \
+                    # ${zstd} \
+                    zstd \
                     ${ZABBIX_BUILD_DEPS} ${FLUENTBIT_BUILD_DEPS} \
                     && \
     \
