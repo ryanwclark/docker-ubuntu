@@ -1,0 +1,19 @@
+#!/usr/bin/with-contenv bash
+
+source /assets/functions/00-container
+PROCESS_NAME="container-init"
+
+### Routine to check if container has been restarted or not
+if [ -d "/tmp/state" ] ; then
+   print_notice "Detected Container that has been restarted - Cleaning '/tmp/state' files"
+   rm -rf /tmp/state/*
+   rm -rf /etc/services.d/*
+else
+   print_debug "Cold Container startup detected - Proceeding to initialize services normally"
+fi
+
+print_debug "Adding shortcuts to .bashrc"
+echo 'down() { s6-svc -d /var/run/s6/services/$1 ;} '>> /root/.bashrc
+echo 'up() { s6-svc -u /var/run/s6/services/$1 ;} ' >> /root/.bashrc
+
+liftoff
