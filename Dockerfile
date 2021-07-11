@@ -45,7 +45,6 @@ RUN debArch=$(dpkg --print-architecture) && \
                     libssl-dev \
                     zlib1g-dev \
                     ' && \
-    echo "Check Point..." && \\
     apt-get install -y --no-install-recommends \
                     apt-transport-https \
                     apt-utils \
