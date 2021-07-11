@@ -5,12 +5,12 @@
 [![Build Status](https://img.shields.io/github/workflow/status/ryanwclark/docker-ubuntu/build?style=flat-square)](https://github.com/ryanwclark/docker-ubuntu/actions?query=workflow%3Abuild)
 [![Docker Stars](https://img.shields.io/docker/stars/ryanwclark/ubuntu.svg?style=flat-square&logo=docker)](https://hub.docker.com/r/ryanwclark/ubuntu/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/ryanwclark/ubuntu.svg?style=flat-square&logo=docker)](https://hub.docker.com/r/ryanwclark/ubuntu/)
-[![Ubuntu](https://img.shields.io/badge/Ubuntu-A81D33?style=flat-square&logo=ubuntu&logoColor=white)](https://www.ubuntu.org/)
+[![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=flat-square&logo=ubuntu&logoColor=white)](https://www.ubuntu.com/)
 
 
 ## About
 
-Dockerfile to build an [ubuntu](https://www.ubuntu.org/) container image to be used as a base for building other images.
+Dockerfile to build an [ubuntu](https://www.ubuntu.com/) container image to be used as a base for building other images.
 
 * Currently tracking Xenial (16.04), Bionic (18.04), Focal (20.04), Groovy (20.10), Hirsute (21.04), Impish (21.10).
 * Multi Arch Compatible for amd64, arm arm64
