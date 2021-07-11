@@ -20,7 +20,15 @@ ENV FLUENTBIT_VERSION=${FLUENTBIT_VERSION:-"1.7.9"} \
 
 RUN debArch=$(dpkg --print-architecture) && \
     case "$debArch" in \
-        amd64) fluentbit='true' ; FLUENTBIT_BUILD_DEPS="bison cmake flex libssl-dev libsasl2-dev libsystemd-dev zlib1g-dev " ;; \
+        amd64) fluentbit='true' ; FLUENTBIT_BUILD_DEPS=' \
+            bison \
+            cmake \
+            flex \
+            libssl-dev \
+            libsasl2-dev \
+            libsystemd-dev \
+            zlib1g-dev \
+            ' ;; \
 		*) : ;; \
 	esac; \
     set -ex && \
@@ -37,6 +45,7 @@ RUN debArch=$(dpkg --print-architecture) && \
                     libssl-dev \
                     zlib1g-dev \
                     ' && \
+    echo "Check Point..." && \\
     apt-get install -y --no-install-recommends \
                     apt-transport-https \
                     apt-utils \
@@ -57,7 +66,6 @@ RUN debArch=$(dpkg --print-architecture) && \
                     sudo \
                     tzdata \
                     vim-tiny \
-                    # ${zstd} \
                     zstd \
                     ${ZABBIX_BUILD_DEPS} ${FLUENTBIT_BUILD_DEPS} \
                     && \
