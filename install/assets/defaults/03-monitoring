@@ -43,4 +43,7 @@ os=$(cat /etc/os-release |grep ^ID= | cut -d = -f2)
     "debian" )
         ZABBIX_AGENT_TYPE=${ZABBIX_AGENT_TYPE:-"modern"}
     ;;
+    "ubuntu" )
+        ZABBIX_AGENT_TYPE=${ZABBIX_AGENT_TYPE:-"modern"}
+    ;;
 esac

@@ -97,6 +97,9 @@ EOF
                 "debian" )
                   echo "UserParameter=packages.upgradable,sudo apt-get update >/dev/null && sudo aptitude search '~U' | wc -l" > ${ZABBIX_CONFIG_PATH}/${ZABBIX_CONFIG_FILE}.d/updated_packages.conf
                 ;;
+                "ubuntu" )
+                  echo "UserParameter=packages.upgradable,sudo apt-get update >/dev/null && sudo aptitude search '~U' | wc -l" > ${ZABBIX_CONFIG_PATH}/${ZABBIX_CONFIG_FILE}.d/updated_packages.conf
+                ;;
           esac
           if [ "${ZABBIX_SETUP_TYPE}" = "AUTO" ] || [ "${ZABBIX_SETUP_TYPE}" = "auto" ] ; then
             print_debug "Configuring Zabbix modern Agent"
