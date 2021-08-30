@@ -20,21 +20,13 @@ ENV FLUENTBIT_VERSION=${FLUENTBIT_VERSION:-"1.7.9"} \
 
 RUN debArch=$(dpkg --print-architecture) && \
     case "$debArch" in \
-        amd64) fluentbit='true' ; FLUENTBIT_BUILD_DEPS=' \
-            bison \
-            cmake \
-            flex \
-            libssl-dev \
-            libsasl2-dev \
-            libsystemd-dev \
-            zlib1g-dev \
-            ' ;; \
+        amd64) fluentbit='true' ; FLUENTBIT_BUILD_DEPS="bison cmake flex libssl-dev libsasl2-dev libsystemd-dev zlib1g-dev curl " ;; \
 		*) : ;; \
 	esac; \
     set -ex && \
     apt-get update && \
     apt-get upgrade -y && \
-    ZABBIX_BUILD_DEPS=' \
+    ZABBIX_BUILD_DEPS=" \
                     autoconf \
                     automake \
                     autotools-dev\
@@ -43,33 +35,30 @@ RUN debArch=$(dpkg --print-architecture) && \
                     pkg-config \
                     libpcre3-dev \
                     libssl-dev \
-                    zlib1g-dev \
-                    ' && \
-    apt-get install -y --no-install-recommends \
-                    apt-transport-https \
-                    apt-utils \
-                    aptitude \
-                    bash \
-                    ca-certificates \
                     curl \
-                    dirmngr \
-                    dos2unix \
-                    gnupg \
-                    less \
-                    logrotate \
-                    msmtp \
-                    nano \
-                    net-tools \
-                    netcat-openbsd \
-                    procps \
-                    sudo \
-                    tzdata \
-                    vim-tiny \
-                    zstd \
-                    ${ZABBIX_BUILD_DEPS} ${FLUENTBIT_BUILD_DEPS} \
-                    && \
-    \
+                    zlib1g-dev \
+                    " && \
+    DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install \
+                apt-transport-https \
+                apt-utils \
+                aptitude \
+                bash \
+                ca-certificates \
+                cron \
+                curl \
+                dirmngr \
+                dos2unix \
+                gnupg \
+                less \
+                logrotate \
+                msmtp \
+                netcat-openbsd \
+                procps \
+                sudo \ 
+                && \
+    DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install ${ZABBIX_BUILD_DEPS} && \
     mkdir -p /usr/local/go && \
+    dpkg --audit && \
     echo "Downloading Go ${GO_VERSION}..." && \
     curl -sSL  https://dl.google.com/go/go${GO_VERSION}.linux-amd64.tar.gz | tar xvfz - --strip 1 -C /usr/local/go && \
     ln -sf /usr/local/go/bin/go /usr/local/bin/ && \
@@ -126,8 +115,10 @@ RUN debArch=$(dpkg --print-architecture) && \
     chown -R zabbix:root /var/log/zabbix && \
     chown --quiet -R zabbix:root /etc/zabbix && \
     rm -rf /usr/src/zabbix && \
+    apt-get -y purge ${ZABBIX_BUILD_DEPS} && \
     \
     ### Fluentbit compilation
+    DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install ${FLUENTBIT_BUILD_DEPS} && \
     mkdir -p /usr/src/fluentbit && \
     curl -sSL https://github.com/fluent/fluent-bit/archive/v${FLUENTBIT_VERSION}.tar.gz | tar xfz - --strip 1 -C /usr/src/fluentbit && \
     cd /usr/src/fluentbit && \
@@ -164,6 +155,7 @@ RUN debArch=$(dpkg --print-architecture) && \
         -DFLB_OUT_SPLUNK=No \
         . && \
     if [ "$debArch" = "amd64" ] ; then make -j"$(nproc)" ; make install ; mv /usr/etc/fluent-bit /etc/fluent-bit ; strip /usr/bin/fluent-bit ; if [ "$debArch" = "amd64" ] && [ "$no_upx" != "true "]; then upx /usr/bin/fluent-bit ; fi ; fi ; \
+    apt-get -y purge ${FLUENTBIT_BUILD_DEPS} && \
     \
     ### S6 installation
     debArch=$(dpkg --print-architecture) && \
@@ -179,15 +171,16 @@ RUN debArch=$(dpkg --print-architecture) && \
     \
     ### Cleanup
     mkdir -p /assets/cron && \
-    apt-get purge -y ${ZABBIX_BUILD_DEPS} ${FLUENTBIT_BUILD_DEPS} && \
     apt-get autoremove -y && \
     apt-get clean -y && \
+    apt-get check && \
     rm -rf /usr/local/go && \
     rm -rf /usr/local/bin/go* && \
     rm -rf /usr/src/* && \
     rm -rf /root/go && \
     rm -rf /root/.cache && \
-    rm -rf /var/lib/apt/lists/* /root/.gnupg /var/log/* /etc/logrotate.d
+    rm -rf /var/lib/apt/lists/* /root/.gnupg /var/log/* /etc/logrotate.d 
+    #/tmp/* /var/tmp/*
 
 ### Networking configuration
 EXPOSE 10050/TCP

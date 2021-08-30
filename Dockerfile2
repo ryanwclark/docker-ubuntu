@@ -1,0 +1,5 @@
+FROM ubuntu:focal
+LABEL maintainer="ryanwclark (github.com/ryanwclark)"
+
+### Entrypoint configuration
+# ENTRYPOINT ["/init"]
