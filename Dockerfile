@@ -20,7 +20,7 @@ ENV FLUENTBIT_VERSION=${FLUENTBIT_VERSION:-"1.8.5"} \
 
 RUN debArch=$(dpkg --print-architecture) && \
     case "$debArch" in \
-        amd64) fluentbit='true' ; FLUENTBIT_BUILD_DEPS="bison cmake flex libssl-dev libsasl2-dev libsystemd-dev zlib1g-dev curl " ;; \
+        amd64) fluentbit='true' ; FLUENTBIT_BUILD_DEPS="bison cmake flex libssl-dev libsasl2-dev libsystemd-dev zlib1g-dev curl g++ " ;; \
 		*) : ;; \
 	esac; \
     set -ex && \
@@ -171,7 +171,8 @@ RUN debArch=$(dpkg --print-architecture) && \
     \
     ### Cleanup
     mkdir -p /assets/cron && \
-    apt-get autoremove -y && \
+    ###  Autoremove seems to have conflict with Snap
+    # apt-get autoremove -y && \
     apt-get clean -y && \
     apt-get check && \
     rm -rf /usr/local/go && \
