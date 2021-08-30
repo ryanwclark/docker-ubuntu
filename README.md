@@ -71,13 +71,14 @@ docker pull ryanwclark/ubuntu:(imagetag)
 
 The following image tags are available along with their tagged release based on what's written in the [Changelog](CHANGELOG.md):
 
-<!-- | Ubuntu version | Tag         |
+<!-- | Ubuntu version | Tag    |
 | -------------- | ----------- |
-| `11`           | `:bullseye` |
-| `10`           | `:buster`   |
-| `9`            | `:stretch`  |
-| `8`            | `:jessie`   | -->
-
+| `16.04`        | `:Xenial`   |
+| `18.04`        | `:Bionic`   |
+| `20.04`        | `:Focal`    |
+| `20.10`        | `:Groovy`   |
+| `21.04`        | `:Hirsute`  |
+| `21.10`        | `:Impish`   | --!>
 
 
 ## Configuration
