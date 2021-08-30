@@ -113,7 +113,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           context: .
           file: ./Dockerfile
-          platforms: linux/amd64,linux/arm/v7,linux/arm64
+          platforms: linux/amd64,linux/arm/v7,linux/arm64/v8
           push: true
           tags: ${{ steps.prep.outputs.tags }}
   bionic:
@@ -221,7 +221,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           context: .
           file: ./Dockerfile
-          platforms: linux/amd64,linux/arm/v7,linux/arm64
+          platforms: linux/amd64,linux/arm/v7,linux/arm64/v8
           push: true
           tags: ${{ steps.prep.outputs.tags }}
   groovy:
@@ -329,7 +329,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           context: .
           file: ./Dockerfile
-          platforms: linux/amd64,linux/arm/v7,linux/arm64
+          platforms: linux/amd64,linux/arm/v7,linux/arm64/v8
           push: true
           tags: ${{ steps.prep.outputs.tags }}
   hirsute:
@@ -437,7 +437,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           context: .
           file: ./Dockerfile
-          platforms: linux/amd64,linux/arm/v7,linux/arm64
+          platforms: linux/amd64,linux/arm/v7,linux/arm64/v8
           push: true
           tags: ${{ steps.prep.outputs.tags }}
   impish:
@@ -545,7 +545,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           context: .
           file: ./Dockerfile
-          platforms: linux/amd64,linux/arm/v7,linux/arm64
+          platforms: linux/amd64,linux/arm/v7,linux/arm64/v8
           push: true
           tags: ${{ steps.prep.outputs.tags }}
   xenial:
@@ -653,6 +653,6 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           context: .
           file: ./Dockerfile
-          platforms: linux/amd64,linux/arm/v7,linux/arm64
+          platforms: linux/amd64,linux/arm/v7,linux/arm64/v8
           push: true
           tags: ${{ steps.prep.outputs.tags }}
