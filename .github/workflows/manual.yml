@@ -27,12 +27,12 @@ jobs:
               "main" | "master" )
                   if [ -n "${{ secrets.LATEST }}" ] ; then
                     if [ "${RELEASE}" = "${{ secrets.LATEST }}" ]; then
-                      BRANCHTAG="${DOCKER_IMAGE}:${RELEASE},${DOCKER_IMAGE}:${RELEASE}-latest,${DOCKER_IMAGE}:latest"
+                      BRANCHTAG="${DOCKER_IMAGE}:${RELEASE},${DOCKER_IMAGE}:latest"
                     else
                       BRANCHTAG="${DOCKER_IMAGE}:${RELEASE},${DOCKER_IMAGE}:${RELEASE-latest}"
                     fi
                   else
-                     BRANCHTAG="${DOCKER_IMAGE}:${RELEASE},${DOCKER_IMAGE}:${RELEASE}-latest"
+                     BRANCHTAG="${DOCKER_IMAGE}:${RELEASE}"
                   fi
                 ;;
               "develop" )
@@ -135,12 +135,12 @@ jobs:
               "main" | "master" )
                   if [ -n "${{ secrets.LATEST }}" ] ; then
                     if [ "${RELEASE}" = "${{ secrets.LATEST }}" ]; then
-                      BRANCHTAG="${DOCKER_IMAGE}:${RELEASE},${DOCKER_IMAGE}:${RELEASE}-latest,${DOCKER_IMAGE}:latest"
+                      BRANCHTAG="${DOCKER_IMAGE}:${RELEASE},${DOCKER_IMAGE}:latest"
                     else
                       BRANCHTAG="${DOCKER_IMAGE}:${RELEASE},${DOCKER_IMAGE}:${RELEASE-latest}"
                     fi
                   else
-                     BRANCHTAG="${DOCKER_IMAGE}:${RELEASE},${DOCKER_IMAGE}:${RELEASE}-latest"
+                     BRANCHTAG="${DOCKER_IMAGE}:${RELEASE}"
                   fi
                 ;;
               "develop" )
@@ -243,12 +243,12 @@ jobs:
               "main" | "master" )
                   if [ -n "${{ secrets.LATEST }}" ] ; then
                     if [ "${RELEASE}" = "${{ secrets.LATEST }}" ]; then
-                      BRANCHTAG="${DOCKER_IMAGE}:${RELEASE},${DOCKER_IMAGE}:${RELEASE}-latest,${DOCKER_IMAGE}:latest"
+                      BRANCHTAG="${DOCKER_IMAGE}:${RELEASE},${DOCKER_IMAGE}:latest"
                     else
                       BRANCHTAG="${DOCKER_IMAGE}:${RELEASE},${DOCKER_IMAGE}:${RELEASE-latest}"
                     fi
                   else
-                     BRANCHTAG="${DOCKER_IMAGE}:${RELEASE},${DOCKER_IMAGE}:${RELEASE}-latest"
+                     BRANCHTAG="${DOCKER_IMAGE}:${RELEASE}"
                   fi
                 ;;
               "develop" )
@@ -351,12 +351,12 @@ jobs:
               "main" | "master" )
                   if [ -n "${{ secrets.LATEST }}" ] ; then
                     if [ "${RELEASE}" = "${{ secrets.LATEST }}" ]; then
-                      BRANCHTAG="${DOCKER_IMAGE}:${RELEASE},${DOCKER_IMAGE}:${RELEASE}-latest,${DOCKER_IMAGE}:latest"
+                      BRANCHTAG="${DOCKER_IMAGE}:${RELEASE},${DOCKER_IMAGE}:latest"
                     else
                       BRANCHTAG="${DOCKER_IMAGE}:${RELEASE},${DOCKER_IMAGE}:${RELEASE-latest}"
                     fi
                   else
-                     BRANCHTAG="${DOCKER_IMAGE}:${RELEASE},${DOCKER_IMAGE}:${RELEASE}-latest"
+                     BRANCHTAG="${DOCKER_IMAGE}:${RELEASE}"
                   fi
                 ;;
               "develop" )
@@ -459,12 +459,12 @@ jobs:
               "main" | "master" )
                   if [ -n "${{ secrets.LATEST }}" ] ; then
                     if [ "${RELEASE}" = "${{ secrets.LATEST }}" ]; then
-                      BRANCHTAG="${DOCKER_IMAGE}:${RELEASE},${DOCKER_IMAGE}:${RELEASE}-latest,${DOCKER_IMAGE}:latest"
+                      BRANCHTAG="${DOCKER_IMAGE}:${RELEASE},${DOCKER_IMAGE}:latest"
                     else
                       BRANCHTAG="${DOCKER_IMAGE}:${RELEASE},${DOCKER_IMAGE}:${RELEASE-latest}"
                     fi
                   else
-                     BRANCHTAG="${DOCKER_IMAGE}:${RELEASE},${DOCKER_IMAGE}:${RELEASE}-latest"
+                     BRANCHTAG="${DOCKER_IMAGE}:${RELEASE}"
                   fi
                 ;;
               "develop" )
@@ -567,12 +567,12 @@ jobs:
               "main" | "master" )
                   if [ -n "${{ secrets.LATEST }}" ] ; then
                     if [ "${RELEASE}" = "${{ secrets.LATEST }}" ]; then
-                      BRANCHTAG="${DOCKER_IMAGE}:${RELEASE},${DOCKER_IMAGE}:${RELEASE}-latest,${DOCKER_IMAGE}:latest"
+                      BRANCHTAG="${DOCKER_IMAGE}:${RELEASE},${DOCKER_IMAGE}:latest"
                     else
                       BRANCHTAG="${DOCKER_IMAGE}:${RELEASE},${DOCKER_IMAGE}:${RELEASE-latest}"
                     fi
                   else
-                     BRANCHTAG="${DOCKER_IMAGE}:${RELEASE},${DOCKER_IMAGE}:${RELEASE}-latest"
+                     BRANCHTAG="${DOCKER_IMAGE}:${RELEASE}"
                   fi
                 ;;
               "develop" )
