@@ -1,4 +1,4 @@
-# docker-ubuntu# docker-ubuntu
+# docker-ubuntu
 
 
 [![GitHub release](https://img.shields.io/github/v/tag/ryanwclark/docker-ubuntu?style=flat-square)](https://github.com/ryanwclark/docker-ubuntu/releases/latest)
@@ -71,14 +71,14 @@ docker pull ryanwclark/ubuntu:(imagetag)
 
 The following image tags are available along with their tagged release based on what's written in the [Changelog](CHANGELOG.md):
 
-<!-- | Ubuntu version | Tag    |
+| Ubuntu version | Tag    |
 | -------------- | ----------- |
 | `16.04`        | `:Xenial`   |
 | `18.04`        | `:Bionic`   |
 | `20.04`        | `:Focal`    |
 | `20.10`        | `:Groovy`   |
 | `21.04`        | `:Hirsute`  |
-| `21.10`        | `:Impish`   | --!>
+| `21.10`        | `:Impish`   |
 
 
 ## Configuration
@@ -377,4 +377,3 @@ These images were built to serve a specific need in a production environment and
 
 ## License
 MIT. See [LICENSE](LICENSE) for more details.
-
