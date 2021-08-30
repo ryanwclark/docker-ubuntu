@@ -167,7 +167,16 @@ RUN debArch=$(dpkg --print-architecture) && \
 		ppc64le) s6Arch='ppc64le' ;; \
 		*) echo >&2 "Error: unsupported architecture ($debArch)"; exit 1 ;; \
 	esac; \
+    S6_BUILD_DEPS=" \
+                curl \
+                tar \
+                " && \
+    DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install ${S6_BUILD_DEPS} &&\
+        curl \ 
+        tar \
+        && \
     curl -sSLk https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLAY_VERSION}/s6-overlay-${s6Arch}.tar.gz | tar xfz - --strip 0 -C / && \
+    # apt-get -y purge ${S6_BUILD_DEPS} && \
     \
     ### Cleanup
     mkdir -p /assets/cron && \
