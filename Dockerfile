@@ -1,4 +1,4 @@
-FROM ubuntu:focal
+FROM ubuntu:groovy
 LABEL maintainer="ryanwclark (github.com/ryanwclark)"
 
 ### Set defaults
@@ -6,6 +6,7 @@ ARG FLUENTBIT_VERSION
 ARG S6_OVERLAY_VERSION
 ARG ZABBIX_VERSION
 ARG GO_VERSION=1.17
+
 
 ENV FLUENTBIT_VERSION=${FLUENTBIT_VERSION:-"1.8.5"} \
     S6_OVERLAY_VERSION=${S6_OVERLAY_VERSION:-"v2.2.0.3"} \
@@ -18,9 +19,12 @@ ENV FLUENTBIT_VERSION=${FLUENTBIT_VERSION:-"1.8.5"} \
     DEBIAN_FRONTEND=noninteractive \
     ZABBIX_HOSTNAME=ubuntu
 
+
 RUN debArch=$(dpkg --print-architecture) && \
     case "$debArch" in \
-        amd64) fluentbit='true' ; FLUENTBIT_BUILD_DEPS="bison cmake flex libssl-dev libsasl2-dev libsystemd-dev zlib1g-dev curl g++ " ;; \
+        amd64) \
+            fluentbit='true' ; FLUENTBIT_BUILD_DEPS="bison cmake flex libssl-dev libsasl2-dev libsystemd-dev zlib1g-dev " \
+            ;; \
 		*) : ;; \
 	esac; \
     set -ex && \
@@ -35,7 +39,6 @@ RUN debArch=$(dpkg --print-architecture) && \
                     pkg-config \
                     libpcre3-dev \
                     libssl-dev \
-                    curl \
                     zlib1g-dev \
                     " && \
     DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install \
@@ -44,7 +47,6 @@ RUN debArch=$(dpkg --print-architecture) && \
                 aptitude \
                 bash \
                 ca-certificates \
-                cron \
                 curl \
                 dirmngr \
                 dos2unix \
@@ -54,7 +56,10 @@ RUN debArch=$(dpkg --print-architecture) && \
                 msmtp \
                 netcat-openbsd \
                 procps \
-                sudo \ 
+                sudo \
+                tzdata \
+                vim-tiny \
+                cron \
                 && \
     DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install ${ZABBIX_BUILD_DEPS} && \
     mkdir -p /usr/local/go && \
@@ -115,8 +120,6 @@ RUN debArch=$(dpkg --print-architecture) && \
     chown -R zabbix:root /var/log/zabbix && \
     chown --quiet -R zabbix:root /etc/zabbix && \
     rm -rf /usr/src/zabbix && \
-    apt-get -y purge ${ZABBIX_BUILD_DEPS} && \
-    \
     ### Fluentbit compilation
     DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install ${FLUENTBIT_BUILD_DEPS} && \
     mkdir -p /usr/src/fluentbit && \
@@ -155,7 +158,6 @@ RUN debArch=$(dpkg --print-architecture) && \
         -DFLB_OUT_SPLUNK=No \
         . && \
     if [ "$debArch" = "amd64" ] ; then make -j"$(nproc)" ; make install ; mv /usr/etc/fluent-bit /etc/fluent-bit ; strip /usr/bin/fluent-bit ; if [ "$debArch" = "amd64" ] && [ "$no_upx" != "true "]; then upx /usr/bin/fluent-bit ; fi ; fi ; \
-    apt-get -y purge ${FLUENTBIT_BUILD_DEPS} && \
     \
     ### S6 installation
     debArch=$(dpkg --print-architecture) && \
@@ -167,30 +169,21 @@ RUN debArch=$(dpkg --print-architecture) && \
 		ppc64le) s6Arch='ppc64le' ;; \
 		*) echo >&2 "Error: unsupported architecture ($debArch)"; exit 1 ;; \
 	esac; \
-    S6_BUILD_DEPS=" \
-                curl \
-                tar \
-                " && \
-    DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install ${S6_BUILD_DEPS} &&\
-        curl \ 
-        tar \
-        && \
     curl -sSLk https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLAY_VERSION}/s6-overlay-${s6Arch}.tar.gz | tar xfz - --strip 0 -C / && \
-    # apt-get -y purge ${S6_BUILD_DEPS} && \
     \
     ### Cleanup
     mkdir -p /assets/cron && \
     ###  Autoremove seems to have conflict with Snap
     # apt-get autoremove -y && \
-    apt-get clean -y && \
-    apt-get check && \
+    # apt-get -y purge ${ZABBIX_BUILD_DEPS} ${FLUENTBIT_BUILD_DEPS} && \
+    # apt-get clean -y && \
+    # apt-get check && \
     rm -rf /usr/local/go && \
     rm -rf /usr/local/bin/go* && \
     rm -rf /usr/src/* && \
     rm -rf /root/go && \
     rm -rf /root/.cache && \
     rm -rf /var/lib/apt/lists/* /root/.gnupg /var/log/* /etc/logrotate.d 
-    #/tmp/* /var/tmp/*
 
 ### Networking configuration
 EXPOSE 10050/TCP
